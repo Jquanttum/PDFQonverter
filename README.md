@@ -5,6 +5,15 @@ An offline PDF **editor, converter and file examiner** with a clean, Windows-11-
 
 Status: **working prototype**. The features below are implemented and tested. The limitations section lists what is not.
 
+![A PDF that looks like a plain invoice, with the Inspect tab showing it was saved twice](docs/screenshots/1-hidden-revisions.png)
+
+| | |
+|---|---|
+| ![What a Word file keeps that Word does not show](docs/screenshots/2-office-inspector.png) | ![The printable case report](docs/screenshots/3-case-report.png) |
+| *Office inspector: the deleted price, hidden text and a template path, all read from the file.* | *Case report: hashes, findings, every revision with its own hash, and a session log.* |
+
+![Excel to PDF listing a hidden sheet before converting](docs/screenshots/4-excel-hidden-sheet.png)
+
 ## Run it
 
 1. Install Python 3 if you do not have it (python.org).
@@ -152,6 +161,10 @@ They cover the revision scanner, date parsing, metadata checks, coordinate round
 
 The whole interface was also driven end to end in headless Chromium: every conversion was run through the UI and its output checked with independent tools (poppler, python-docx, Pillow, openpyxl and LibreOffice).
 
+Those browser tests are in `tests/e2e`. `python tests/e2e/run_all.py` starts the server and runs all five (about 210 checks). They need Python with `playwright`, `openpyxl`, `python-docx`, `Pillow` and `reportlab`, plus poppler and LibreOffice for the comparisons. Set `QPDF_CHROME` to use an installed Chrome instead of Playwright's.
+
+The Node suites run on every push through GitHub Actions (`.github/workflows/test.yml`). The browser tests are run by hand.
+
 ## Licences
 
-Quanttum PDF's own code: yours to license as you choose. pdf.js is Apache-2.0 and pdf-lib is MIT; both licence files are in `licenses/`.
+Quanttum PDF's own code is MIT licensed (see `LICENSE`). pdf.js is Apache-2.0 and pdf-lib is MIT; both licence files are in `licenses/`.
