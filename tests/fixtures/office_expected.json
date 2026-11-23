@@ -1,0 +1,42 @@
+{
+ "evidence.docx": {
+  "title": "Supply agreement",
+  "creator": "Ama Owusu",
+  "lastModifiedBy": "Kofi Boateng",
+  "revision": 7,
+  "created": "2026-03-10T08:00:00Z",
+  "modified": "2026-03-02T16:45:00Z"
+ },
+ "sample.docx": {
+  "creator": "python-docx",
+  "revision": 1,
+  "created": "2013-12-23T23:15:00Z"
+ },
+ "book.xlsx": {
+  "creator": "openpyxl",
+  "sheets": {
+   "Sales": "visible",
+   "Notes": "visible",
+   "Payroll": "hidden"
+  },
+  "hiddenRows": {
+   "Sales": [
+    6
+   ],
+   "Notes": [],
+   "Payroll": []
+  },
+  "hiddenCols": {
+   "Sales": [
+    "H"
+   ],
+   "Notes": [],
+   "Payroll": []
+  },
+  "comments": {
+   "Sales": 1,
+   "Notes": 0,
+   "Payroll": 0
+  }
+ }
+}

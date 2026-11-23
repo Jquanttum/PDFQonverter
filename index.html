@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quanttum PDF</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f6cbd'/%3E%3Ctext x='16' y='23' font-size='20' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3EQ%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app" class="empty">
+
+  <header class="titlebar">
+    <div class="brand"><span class="logo">Q</span><span class="brand-name">Quanttum PDF</span></div>
+    <div class="seg" role="tablist" aria-label="Mode">
+      <button class="seg-btn active" data-mode="edit" role="tab" aria-selected="true">Edit</button>
+      <button class="seg-btn" data-mode="convert" role="tab" aria-selected="false">Convert</button>
+    </div>
+    <div class="doc-title" id="docTitle">No document open</div>
+    <div class="title-actions">
+      <button class="btn" id="btnOpen" title="Open a PDF (Ctrl+O)"><i data-icon="open"></i><span>Open</span></button>
+      <button class="btn" id="btnAdd" title="Insert pages from another PDF" disabled><i data-icon="addfile"></i><span>Add pages</span></button>
+      <button class="btn accent" id="btnSave" title="Save (Ctrl+S)" disabled><i data-icon="save"></i><span>Save</span></button>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="tools" id="tools" role="toolbar" aria-label="Tools"></div>
+    <div class="spacer"></div>
+    <div class="group">
+      <button class="icon-btn" id="btnUndo" title="Undo (Ctrl+Z)" disabled><i data-icon="undo"></i></button>
+      <button class="icon-btn" id="btnRedo" title="Redo (Ctrl+Y)" disabled><i data-icon="redo"></i></button>
+    </div>
+    <div class="group">
+      <button class="icon-btn" id="btnZoomOut" title="Zoom out (Ctrl + scroll)"><i data-icon="zoomout"></i></button>
+      <span class="zoom-label" id="zoomLabel">120%</span>
+      <button class="icon-btn" id="btnZoomIn" title="Zoom in"><i data-icon="zoomin"></i></button>
+      <button class="icon-btn" id="btnFit" title="Fit page width"><i data-icon="fit"></i></button>
+    </div>
+  </div>
+
+  <div class="workspace">
+    <aside id="thumbs" aria-label="Pages"></aside>
+
+    <main id="viewer">
+      <div id="welcome">
+        <div class="welcome-card">
+          <div class="welcome-logo">Q</div>
+          <h1>Quanttum PDF</h1>
+          <p>Open a PDF to read, mark up, sign, rearrange and redact it.<br>Everything happens on this computer. Nothing is uploaded.</p>
+          <button class="btn accent big" id="btnOpen2"><i data-icon="open"></i><span>Open a PDF</span></button>
+          <p class="muted small">or drop a file anywhere in this window</p>
+        </div>
+      </div>
+      <div id="pages"></div>
+    </main>
+
+    <aside id="panel">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="edit" role="tab">Edit</button>
+        <button class="tab" data-tab="inspect" role="tab">Inspect</button>
+      </div>
+      <div class="tabpane active" id="paneEdit"></div>
+      <div class="tabpane" id="paneInspect"></div>
+    </aside>
+  </div>
+
+  <section id="convertView" hidden>
+    <nav id="cvNav" aria-label="Conversions"></nav>
+    <div id="cvMain"></div>
+  </section>
+
+  <footer class="statusbar">
+    <span id="statPage">&nbsp;</span>
+    <span id="statHint" class="hint"></span>
+    <span class="offline"><i data-icon="shield"></i>Works offline. Files never leave this computer.</span>
+  </footer>
+</div>
+
+<!-- Save dialog -->
+<dialog id="saveDlg">
+  <div class="dlg">
+    <h2>Save PDF</h2>
+    <label class="field"><span>File name</span><input id="saveName" type="text" spellcheck="false"></label>
+    <label class="check"><input type="checkbox" id="optScrub"><span>Remove document metadata (title, author, creator, dates)</span></label>
+    <div id="saveSummary" class="note"></div>
+    <div id="saveResult" class="result" hidden></div>
+    <menu>
+      <button class="btn" id="saveClose" type="button">Close</button>
+      <button class="btn" id="saveAgain" type="button" hidden>Download again</button>
+      <button class="btn accent" id="saveGo" type="button">Save</button>
+    </menu>
+  </div>
+</dialog>
+
+<!-- Signature dialog -->
+<dialog id="sigDlg">
+  <div class="dlg">
+    <h2>Draw your signature</h2>
+    <canvas id="sigPad" width="840" height="300"></canvas>
+    <div class="row">
+      <span class="muted small">Ink</span>
+      <button class="swatch on" data-ink="#111111" style="background:#111111" aria-label="Black ink"></button>
+      <button class="swatch" data-ink="#1b3a8a" style="background:#1b3a8a" aria-label="Blue ink"></button>
+      <span class="spacer"></span>
+      <button class="btn" id="sigClear" type="button">Clear</button>
+    </div>
+    <p class="note">The signature is kept only in this browser on this computer, so you can reuse it. It is never uploaded.</p>
+    <menu>
+      <button class="btn" id="sigCancel" type="button">Cancel</button>
+      <button class="btn accent" id="sigUse" type="button">Use signature</button>
+    </menu>
+  </div>
+</dialog>
+
+<!-- Revision comparison dialog -->
+<dialog id="diffDlg">
+  <div class="dlg wide">
+    <h2 id="diffTitle">Compare revisions</h2>
+    <div id="diffBody" class="diff-body"></div>
+    <menu><button class="btn accent" id="diffClose" type="button">Close</button></menu>
+  </div>
+</dialog>
+
+<input type="file" id="fileOpen" accept="application/pdf,.pdf" hidden>
+<input type="file" id="fileAdd" accept="application/pdf,.pdf" hidden>
+<input type="file" id="fileImg" accept="image/png,image/jpeg" hidden>
+<input type="file" id="cvFile" hidden>
+<div id="toasts" aria-live="polite"></div>
+
+<script src="lib/pdf.min.js"></script>
+<script src="lib/pdf-lib.min.js"></script>
+<script src="engine.js"></script>
+<script src="converter.js"></script>
+<script src="sheets.js"></script>
+<script src="office.js"></script>
+<script src="report.js"></script>
+<script src="app.js"></script>
+<script src="convert-ui.js"></script>
+</body>
+</html>
