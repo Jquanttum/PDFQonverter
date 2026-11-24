@@ -86,12 +86,19 @@
     }
     h += '</section>';
 
-    h += logSection('5', log);
+    var n = 5;
+    if (ev.signatures) {
+      h += '<section><h2>5. Digital signatures</h2><p>The file carries <b>' + ev.signatures.signatures.length + '</b> digital ' + (ev.signatures.signatures.length === 1 ? 'signature' : 'signatures') + '.</p>';
+      ev.signatures.signatures.forEach(function (g) { h += '<h3>' + esc(g.label) + '</h3>' + kv(g.rows.map(function (r) { return [r[0], esc(r[1])]; })); });
+      h += '<ul class="finds">' + ev.signatures.findings.map(function (f) { return '<li class="' + (f.level === 'warn' ? 'warn' : 'info') + '"><b>' + (f.level === 'warn' ? 'Check' : 'Note') + '</b> ' + esc(f.text) + '</li>'; }).join('') + '</ul></section>';
+      n = 6;
+    }
+    h += logSection(String(n), log);
 
-    h += '<section class="method"><h2>6. What this report does and does not show</h2><ul>' +
+    h += '<section class="method"><h2>' + (n + 1) + '. What this report does and does not show</h2><ul>' +
       '<li>Hashes are SHA-256, computed on this computer by the browser from the exact bytes of each file.</li>' +
       '<li>Revisions are found by counting <code>%%EOF</code> markers that follow a <code>startxref</code> entry. Linearized files, which legitimately end twice, are counted once.</li>' +
-      '<li>Several revisions are normal for signed or form-filled files. They show that a file was changed and saved on top of earlier content, not who changed it or why.</li>' +
+      (ev.signatures ? '<li>Signature checks compare the signed bytes with the hash stored in the signature and verify RSA signatures against the certificate inside the file. They do not check that a certificate is trusted, in date at the time of signing against an independent clock, or unrevoked, and ECDSA and RSA-PSS signatures are not verified.</li>' : '') + '<li>Several revisions are normal for signed or form-filled files. They show that a file was changed and saved on top of earlier content, not who changed it or why.</li>' +
       '<li>Dates and producer names come from the file itself and can be forged. A file with consistent metadata can still be altered.</li>' +
       '<li>This tool is a working prototype and has not been validated as forensic software. Confirm anything important with a validated tool before relying on it.</li></ul></section>';
 

@@ -266,6 +266,11 @@
     S.analysis = { name: src.name, size: src.bytes.length, pages: src.numPages, scan: scan, info: im.info, xmp: im.xmp, findings: findings, hash: null };
     S.revDetails = null;
     renderInspector();
+    var mine = S.analysis;
+    try {
+      var sg = await window.QSig.analyse(src.bytes, { helpers: window.QSig.webCryptoHelpers(crypto.subtle), revisions: scan.revisions });
+      if (S.analysis === mine) { mine.sigs = sg; renderInspector(); }
+    } catch (e) { if (S.analysis === mine) mine.sigs = { signatures: [], findings: [{ level: 'warn', text: 'The signature check failed to run: ' + e.message }] }; }
     S.analysis.hash = await sha256(src.bytes);
     logEvent('open', 'Opened for examination', [{ role: 'Examined', name: src.name, size: src.bytes.length, hash: S.analysis.hash }]);
     renderInspector();
@@ -362,8 +367,8 @@
       if (a.scan.trailingBytes > 0 && revs.length) { var off = revs[revs.length - 1].end; trailing = { offset: off, bytes: src.bytes.length - off, hash: await sha256(src.bytes.slice(off)) }; }
       var base = a.name.replace(/\.pdf$/i, '').replace(/[\\\/:*?"<>|]+/g, '_');
       var html = window.QReport.build({
-        tool: { name: 'Quanttum PDF', version: '0.3' }, generated: new Date(), caseRef: S.report.caseRef.trim(), examiner: S.report.examiner.trim(), fmtDate: fmtPdfDate,
-        evidence: { name: a.name, size: a.size, pages: a.pages, hash: a.hash, version: a.scan.version, linearized: a.scan.linearized, info: a.info, xmp: a.xmp, findings: a.findings, revisions: list, trailing: trailing },
+        tool: { name: 'Quanttum PDF', version: '0.4' }, generated: new Date(), caseRef: S.report.caseRef.trim(), examiner: S.report.examiner.trim(), fmtDate: fmtPdfDate,
+        evidence: { name: a.name, size: a.size, pages: a.pages, hash: a.hash, version: a.scan.version, linearized: a.scan.linearized, info: a.info, xmp: a.xmp, findings: a.findings, revisions: list, trailing: trailing, signatures: a.sigs && a.sigs.signatures.length ? a.sigs : null },
         log: S.log.slice()
       });
       var url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
@@ -429,6 +434,18 @@
       h += '</tbody></table>';
     }
     h += '</div>';
+    if (a.sigs && a.sigs.signatures.length) {
+      var sw = a.sigs.findings.filter(function (f) { return f.level === 'warn'; }).length;
+      h += '<div class="card" id="sigCard"><h3>Digital signatures (' + a.sigs.signatures.length + ')</h3>' +
+        '<p class="muted small">Checks whether the signed bytes are unchanged and whether anything was added after signing. It does not check that the certificate is trusted, so a green result here is not a verdict on who signed.</p>';
+      a.sigs.signatures.forEach(function (g) {
+        h += '<h4 class="subh">' + esc(g.label) + '</h4><dl class="kv">' + g.rows.map(function (r) { return '<dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('') + '</dl>';
+      });
+      a.sigs.findings.forEach(function (f) {
+        h += '<div class="finding ' + f.level + '"><span class="mark"><b>' + (f.level === 'warn' ? '!' : 'i') + '</b></span><span>' + esc(f.text) + '</span></div>';
+      });
+      h += '</div>';
+    }
     h += '<div class="card"><h3>Case report</h3><p class="muted small">One printable page with the hashes, findings, metadata, every revision with its own hash, and a log of what was done in this session. Open it and use Print to make a PDF.</p>' +
       '<div><label class="field"><span>Case reference (optional)</span><input type="text" id="rptCase" value="' + esc(S.report.caseRef) + '" maxlength="80" spellcheck="false"></label>' +
       '<label class="field"><span>Examiner (optional)</span><input type="text" id="rptExaminer" value="' + esc(S.report.examiner) + '" maxlength="80" spellcheck="false"></label></div>' +

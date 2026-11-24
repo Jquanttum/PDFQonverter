@@ -59,6 +59,10 @@ Try `samples/invoice_edited.pdf`: it looks like a plain invoice for GHS 10,000.0
 - The saved file is rebuilt from scratch as a single clean revision. Earlier revisions and XMP packets are not carried over.
 - Optional: remove document metadata entirely.
 
+### Digital signature check (Inspect tab)
+A green tick in a PDF viewer hides the useful questions. For each signature the tool shows which bytes it covers, whether anything was **added after** signing (a later revision), whether the covered bytes still hash to the value that was signed, whether the RSA signature verifies against the certificate stored in the file, the signer and certificate dates, and whether the padding after the signature holds hidden bytes. Several signatures in a row are explained as normal countersigning.
+**It does not check** that a certificate is trusted or chains to an authority, whether it was revoked, who the signer really is, or ECDSA and RSA-PSS signatures. Test files are signed with pyHanko and compared with poppler's `pdfsig`.
+
 ## Convert mode
 
 Ten conversions and one inspector, each with a page range or options where they make sense. Every result shows its **SHA-256** and, where there is a source file, the source's SHA-256 too, so the chain from original to converted copy is recorded.
@@ -129,6 +133,7 @@ Converter:
 | `sheets.js` | Spreadsheet logic with no DOM: .xlsx reader and writer (OOXML, shared strings, styles, 1904 dates), Excel number and date formatting, CSV parser and writer, Excel to PDF layout, PDF to table detection. |
 | `converter.js` | Conversion logic with no DOM: zip reader/writer, .docx reader/writer, text and Word layout, PDF text to lines and paragraphs, JPEG metadata parser and lossless stripper, image sniffing, page ranges. |
 | `office.js` | Office inspector with no DOM: reads the zip directory itself (part dates, duplicates, trailing data), relationships, properties, tracked changes, hidden content, leftovers. |
+| `signatures.js` | Signature check with no DOM: reads each `/ByteRange`, a small DER/CMS reader (signer, certificate dates, signed hash), and compares the covered bytes with the signed hash; Web Crypto is passed in. |
 | `report.js` | Case report builder with no DOM: turns the examination data and activity log into one escaped, printable HTML page (PDF or Office file). |
 | `app.js` | Editor interface: viewer, tools, undo, page management, inspector, save flow, Edit/Convert switch. |
 | `convert-ui.js` | Convert interface: the ten conversions, the Office inspector, file handling, progress, results. |
@@ -136,7 +141,7 @@ Converter:
 | `server.py`, `start.bat` | Local launcher. Binds to 127.0.0.1 only. |
 | `lib/` | pdf.js 3.11.174 (rendering and reading) and pdf-lib 1.17.1 (writing). Licences in `licenses/`. |
 | `samples/` | `make_sample.js` hand-builds a two-revision PDF so the forensic features have something real to find. All content is fictional. |
-| `tests/` | `engine.test.js` (48 checks), `converter.test.js` (68 checks), `sheets.test.js` (148 checks), `report.test.js`, `office.test.js` (72 checks) and fixtures: a JPEG with EXIF orientation, GPS and a comment; a plain JPEG; a PNG; a Word file; three workbooks (written by openpyxl, re-calculated by LibreOffice, and a 1904-system one); a two-page table PDF made with reportlab. `make_xlsx_fixtures.py`, `make_table_pdf.py` and `make_office_fixtures.py` rebuild them (the last also writes `office_expected.json`: values read by python-docx and openpyxl, so the inspector is compared with independent readers). |
+| `tests/` | `engine.test.js` (48 checks), `converter.test.js` (68 checks), `sheets.test.js` (148 checks), `report.test.js`, `office.test.js` (72 checks), `signatures.test.js` (53 checks, compared with poppler's `pdfsig`) and fixtures: a JPEG with EXIF orientation, GPS and a comment; a plain JPEG; a PNG; a Word file; three workbooks (written by openpyxl, re-calculated by LibreOffice, and a 1904-system one); a two-page table PDF made with reportlab. `make_xlsx_fixtures.py`, `make_table_pdf.py` and `make_office_fixtures.py` rebuild them (the last also writes `office_expected.json`: values read by python-docx and openpyxl, so the inspector is compared with independent readers). |
 
 Design notes worth knowing:
 - Annotations are stored in *view space* (as displayed). The engine converts to PDF space for each of the four rotations, and the tests confirm text lands upright at the right position on 0, 90, 180 and 270 degree pages.
@@ -155,13 +160,14 @@ node tests/converter.test.js
 node tests/sheets.test.js
 node tests/report.test.js
 node tests/office.test.js
+node tests/signatures.test.js
 ```
 
 They cover the revision scanner, date parsing, metadata checks, coordinate round-trips, upright text on all rotations, true redaction (no trace in the output bytes), zip and .docx round trips, JPEG EXIF/GPS detection and lossless stripping (including a control that shows the original photo's camera name does end up in a PDF), page flow and table splitting, page-range parsing, and PDF text reconstruction on a real PDF. The spreadsheet tests read real files produced by other programs (openpyxl, LibreOffice), so the reader is not only tested against its own output.
 
 The whole interface was also driven end to end in headless Chromium: every conversion was run through the UI and its output checked with independent tools (poppler, python-docx, Pillow, openpyxl and LibreOffice).
 
-Those browser tests are in `tests/e2e`. `python tests/e2e/run_all.py` starts the server and runs all five (about 210 checks). They need Python with `playwright`, `openpyxl`, `python-docx`, `Pillow` and `reportlab`, plus poppler and LibreOffice for the comparisons. Set `QPDF_CHROME` to use an installed Chrome instead of Playwright's.
+Those browser tests are in `tests/e2e`. `python tests/e2e/run_all.py` starts the server and runs all six (about 220 checks). They need Python with `playwright`, `openpyxl`, `python-docx`, `Pillow` and `reportlab`, plus poppler and LibreOffice for the comparisons. Set `QPDF_CHROME` to use an installed Chrome instead of Playwright's.
 
 The Node suites run on every push through GitHub Actions (`.github/workflows/test.yml`). The browser tests are run by hand.
 

@@ -1,0 +1,66 @@
+{
+ "unsigned": [],
+ "signed_ok": [
+  {
+   "Signature Field Name": "Sig1",
+   "Signer Certificate Common Name": "Ama Mensah (test)",
+   "Signer full Distinguished Name": "CN=Ama Mensah (test),O=Test Traders Ltd,C=GH",
+   "Signing Time": "Nov 24 2026 01:30:37",
+   "Signing Hash Algorithm": "SHA-256",
+   "Signature Type": "adbe.pkcs7.detached",
+   "Signed Ranges": "[0 - 2473], [7163 - 7708]",
+   "Coverage": "total",
+   "Signature Validation": "Signature is Valid."
+  }
+ ],
+ "signed_appended": [
+  {
+   "Signature Field Name": "Sig1",
+   "Signer Certificate Common Name": "Ama Mensah (test)",
+   "Signer full Distinguished Name": "CN=Ama Mensah (test),O=Test Traders Ltd,C=GH",
+   "Signing Time": "Nov 24 2026 01:30:37",
+   "Signing Hash Algorithm": "SHA-256",
+   "Signature Type": "adbe.pkcs7.detached",
+   "Signed Ranges": "[0 - 2473], [7163 - 7708]",
+   "Coverage": "partial",
+   "Signature Validation": "Signature is Valid."
+  }
+ ],
+ "signed_tampered": [
+  {
+   "Signature Field Name": "Sig1",
+   "Signer Certificate Common Name": "Ama Mensah (test)",
+   "Signer full Distinguished Name": "CN=Ama Mensah (test),O=Test Traders Ltd,C=GH",
+   "Signing Time": "Nov 24 2026 01:30:37",
+   "Signing Hash Algorithm": "SHA-256",
+   "Signature Type": "adbe.pkcs7.detached",
+   "Signed Ranges": "[0 - 2473], [7163 - 7708]",
+   "Coverage": "total",
+   "Signature Validation": "Digest Mismatch."
+  }
+ ],
+ "signed_twice": [
+  {
+   "Signature Field Name": "Sig1",
+   "Signer Certificate Common Name": "Ama Mensah (test)",
+   "Signer full Distinguished Name": "CN=Ama Mensah (test),O=Test Traders Ltd,C=GH",
+   "Signing Time": "Nov 24 2026 01:30:37",
+   "Signing Hash Algorithm": "SHA-256",
+   "Signature Type": "adbe.pkcs7.detached",
+   "Signed Ranges": "[0 - 2473], [7163 - 7708]",
+   "Coverage": "partial",
+   "Signature Validation": "Signature is Valid."
+  },
+  {
+   "Signature Field Name": "Sig2",
+   "Signer Certificate Common Name": "Kofi Boateng (test)",
+   "Signer full Distinguished Name": "CN=Kofi Boateng (test),O=Test Suppliers Ltd,C=GH",
+   "Signing Time": "Nov 24 2026 01:30:37",
+   "Signing Hash Algorithm": "SHA-256",
+   "Signature Type": "adbe.pkcs7.detached",
+   "Signed Ranges": "[0 - 8436], [13174 - 13699]",
+   "Coverage": "total",
+   "Signature Validation": "Signature is Valid."
+  }
+ ]
+}

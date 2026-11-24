@@ -330,3 +330,4 @@ a.btn.accent { color: #fff; }
 .cv-list { margin: 4px 0; padding-left: 20px; font-size: 13px; }
 .cv-list li { margin: 3px 0; overflow-wrap: anywhere; }
 #cvRptGo { margin-top: 14px; }
+.subh { margin: 14px 0 4px; font-size: 13px; font-weight: 600; }

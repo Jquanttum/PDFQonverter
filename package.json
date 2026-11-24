@@ -1,13 +1,13 @@
 {
   "name": "quanttum-pdf",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Offline PDF editor, converter and file examiner. Vanilla JS, no build step.",
   "private": true,
   "license": "MIT",
   "engines": { "node": ">=18" },
   "scripts": {
     "start": "python server.py",
-    "test": "node tests/engine.test.js && node tests/converter.test.js && node tests/sheets.test.js && node tests/report.test.js && node tests/office.test.js"
+    "test": "node tests/engine.test.js && node tests/converter.test.js && node tests/sheets.test.js && node tests/report.test.js && node tests/office.test.js && node tests/signatures.test.js"
   },
   "devDependencies": {
     "pdf-lib": "1.17.1",

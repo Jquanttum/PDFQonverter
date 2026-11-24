@@ -1,0 +1,7 @@
+node_modules/
+__pycache__/
+*.pyc
+tests/fixtures/_lo/
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,17 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  node-suites:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # The app itself needs no packages. These two are only used by the tests, to read and write PDFs in Node.
+      - run: npm install --no-audit --no-fund
+      - run: npm test
