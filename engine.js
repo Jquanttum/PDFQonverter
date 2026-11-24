@@ -1,4 +1,4 @@
-/*  Quanttum PDF - engine.js
+/*  PDF Qonverter - engine.js
  *  Pure logic, no DOM. Runs in the browser (window.QEngine) and in Node (for tests).
  *
  *  Coordinate convention used everywhere in the app:
@@ -255,7 +255,7 @@
         if (sd.getCreator()) out.setCreator(sd.getCreator());
         if (sd.getCreationDate()) out.setCreationDate(sd.getCreationDate());
       } catch (e) { /* unreadable metadata is simply not copied */ }
-      out.setProducer('Quanttum PDF');
+      out.setProducer('PDF Qonverter');
       out.setModificationDate(new Date());
     }
 

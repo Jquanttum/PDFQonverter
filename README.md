@@ -1,4 +1,4 @@
-# Quanttum PDF
+# PDF Qonverter
 
 An offline PDF **editor, converter and file examiner** with a clean, Windows-11-style interface, built around three things most PDF tools get wrong:
 **redaction that really removes the data**, **showing you what is hidden inside a PDF**, and **conversions that do not leak photo metadata into the PDF**.
@@ -173,4 +173,4 @@ The Node suites run on every push through GitHub Actions (`.github/workflows/tes
 
 ## Licences
 
-Quanttum PDF's own code is MIT licensed (see `LICENSE`). pdf.js is Apache-2.0 and pdf-lib is MIT; both licence files are in `licenses/`.
+PDF Qonverter's own code is MIT licensed (see `LICENSE`). pdf.js is Apache-2.0 and pdf-lib is MIT; both licence files are in `licenses/`.

@@ -1,4 +1,4 @@
-/*  Quanttum PDF - sheets.js
+/*  PDF Qonverter - sheets.js
  *  Pure logic for the spreadsheet conversions. No DOM. Runs in the browser (window.QSheets) and in Node (tests).
  *  Needs converter.js (zip reader/writer, XML helpers, PDF text helpers).
  *
@@ -649,8 +649,8 @@
     files.push({ name: '_rels/.rels', data: enc.encode(XML_HEAD + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>' +
       (hasProps ? '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>' : '') + '</Relationships>') });
     if (hasProps) {
-      files.push({ name: 'docProps/core.xml', data: enc.encode(XML_HEAD + '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:creator>Quanttum PDF</dc:creator>' + (o.title ? '<dc:title>' + C.xmlEscape(o.title) + '</dc:title>' : '') + '<dcterms:created xsi:type="dcterms:W3CDTF">' + now.toISOString().replace(/\.\d+Z$/, 'Z') + '</dcterms:created></cp:coreProperties>') });
-      files.push({ name: 'docProps/app.xml', data: enc.encode(XML_HEAD + '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"><Application>Quanttum PDF</Application></Properties>') });
+      files.push({ name: 'docProps/core.xml', data: enc.encode(XML_HEAD + '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:creator>PDF Qonverter</dc:creator>' + (o.title ? '<dc:title>' + C.xmlEscape(o.title) + '</dc:title>' : '') + '<dcterms:created xsi:type="dcterms:W3CDTF">' + now.toISOString().replace(/\.\d+Z$/, 'Z') + '</dcterms:created></cp:coreProperties>') });
+      files.push({ name: 'docProps/app.xml', data: enc.encode(XML_HEAD + '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"><Application>PDF Qonverter</Application></Properties>') });
     }
     files.push({ name: 'xl/workbook.xml', data: enc.encode(XML_HEAD + '<workbook xmlns="' + NS_MAIN + '" xmlns:r="' + NS_R + '"><sheets>' +
       sheets.map(function (s, i) { return '<sheet name="' + C.xmlEscape(s.name).replace(/"/g, '&quot;') + '" sheetId="' + (i + 1) + '" r:id="rId' + (i + 1) + '"/>'; }).join('') + '</sheets></workbook>') });

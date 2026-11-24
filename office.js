@@ -1,4 +1,4 @@
-/* Quanttum PDF - office.js
+/* PDF Qonverter - office.js
  * Looks inside Word (.docx), Excel (.xlsx / .xlsm) and PowerPoint (.pptx) files for what the program that opened them
  * would not show: who touched the file, tracked changes and the text they deleted, hidden text, hidden sheets and slides,
  * speaker notes, leftover strings, template paths from someone's computer, macros, and oddities in the zip container.
@@ -200,7 +200,7 @@
 
     /* macros and embedded objects */
     var macro = names.filter(function (n) { return /vbaProject\.bin$/i.test(n); });
-    if (macro.length) warn('The file contains a macro project (' + macro[0] + '). Macros are program code that can run when the file is opened. Quanttum PDF never runs them.');
+    if (macro.length) warn('The file contains a macro project (' + macro[0] + '). Macros are program code that can run when the file is opened. PDF Qonverter never runs them.');
     if (/\.(docm|xlsm|pptm)$/i.test(opts.name || '') && !macro.length) info('The file name says it can hold macros, but no macro project was found in it.');
     var embeds = names.filter(function (n) { return /\/(embeddings|activeX)\//i.test(n) || /oleObject\d*\.bin$/i.test(n); });
     if (embeds.length) info(plural(embeds.length, 'embedded object', 'embedded objects') + ' inside the file (' + embeds.slice(0, 4).join(', ') + (embeds.length > 4 ? ', …' : '') + '). Each one is a complete file of its own and can carry its own metadata.');

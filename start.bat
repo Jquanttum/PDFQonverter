@@ -1,6 +1,6 @@
 @echo off
 cd /d "%~dp0"
-title Quanttum PDF
+title PDF Qonverter
 where py >nul 2>nul
 if %errorlevel%==0 (
   py server.py

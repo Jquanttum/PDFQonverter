@@ -4,7 +4,7 @@
 //   revision 1: an invoice for GHS 1,000.00, Info: Producer "Generic Report Writer"
 //   revision 2: appended after revision 1's %%EOF. Replaces the content stream so the invoice
 //               reads GHS 10,000.00, and replaces the Info dictionary with a different Producer.
-// Any viewer shows only the new amount. Quanttum PDF's Inspector shows both versions.
+// Any viewer shows only the new amount. PDF Qonverter's Inspector shows both versions.
 // All names, numbers and amounts are fictional.
 
 const fs = require('fs');

@@ -1,4 +1,4 @@
-/* Quanttum PDF - app.js
+/* PDF Qonverter - app.js
  * Vanilla JS. Uses pdf.js (render/read) and pdf-lib (write), both vendored in /lib, via engine.js.
  */
 (function () {
@@ -195,7 +195,7 @@
     $('#app').classList.remove('empty');
     $('#docTitle').innerHTML = '<b>' + esc(name) + '</b> · ' + src.numPages + (src.numPages === 1 ? ' page' : ' pages');
     S.titleHtml = $('#docTitle').innerHTML;
-    document.title = name + ' - Quanttum PDF';
+    document.title = name + ' - PDF Qonverter';
     updateButtons();
     var vw = $('#viewer'); vw.scrollTop = 0;
     refreshAll();
@@ -367,7 +367,7 @@
       if (a.scan.trailingBytes > 0 && revs.length) { var off = revs[revs.length - 1].end; trailing = { offset: off, bytes: src.bytes.length - off, hash: await sha256(src.bytes.slice(off)) }; }
       var base = a.name.replace(/\.pdf$/i, '').replace(/[\\\/:*?"<>|]+/g, '_');
       var html = window.QReport.build({
-        tool: { name: 'Quanttum PDF', version: '0.4' }, generated: new Date(), caseRef: S.report.caseRef.trim(), examiner: S.report.examiner.trim(), fmtDate: fmtPdfDate,
+        tool: { name: 'PDF Qonverter', version: '0.4' }, generated: new Date(), caseRef: S.report.caseRef.trim(), examiner: S.report.examiner.trim(), fmtDate: fmtPdfDate,
         evidence: { name: a.name, size: a.size, pages: a.pages, hash: a.hash, version: a.scan.version, linearized: a.scan.linearized, info: a.info, xmp: a.xmp, findings: a.findings, revisions: list, trailing: trailing, signatures: a.sigs && a.sigs.signatures.length ? a.sigs : null },
         log: S.log.slice()
       });

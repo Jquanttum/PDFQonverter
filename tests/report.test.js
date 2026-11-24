@@ -26,7 +26,7 @@ const log = [
   { time: new Date(2026, 10, 23, 3, 9, 0), type: 'convert', text: 'Converted PDF to text', files: [{ role: 'Source', name: ev.name, size: ev.size, hash: ev.hash }, { role: 'Output', name: 'invoice_edited.txt', size: 120, hash: sha(Buffer.from('x')) }] }
 ];
 
-const html = R.build({ tool: { name: 'Quanttum PDF', version: '0.2' }, generated: t0, caseRef: 'UDS/FS/2026/014', examiner: 'J. Dela', evidence: ev, log, fmtDate: (s) => 'formatted ' + s });
+const html = R.build({ tool: { name: 'PDF Qonverter', version: '0.2' }, generated: t0, caseRef: 'UDS/FS/2026/014', examiner: 'J. Dela', evidence: ev, log, fmtDate: (s) => 'formatted ' + s });
 
 /* structure */
 ok(/^<!doctype html>/i.test(html) && html.indexOf('</html>') > 0, 'a complete HTML document');

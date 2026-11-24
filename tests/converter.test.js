@@ -108,7 +108,7 @@ async function allText(pdf) {
   ok(same(sets.a4.sizes[0], [841.9, 595.3]) && same(sets.a4.sizes[2], [595.3, 841.9]), 'A4: landscape image gets landscape page, portrait gets portrait');
   ok(same(sets.letter.sizes[1], [792, 612]), 'Letter landscape page size');
   const info = await (await load(sets.a4.bytes)).getMetadata();
-  ok(info.info.Producer === 'Quanttum PDF' && !!info.info.CreationDate, 'producer and creation date set');
+  ok(info.info.Producer === 'PDF Qonverter' && !!info.info.CreationDate, 'producer and creation date set');
   const scrubbed = await C.imagesToPdf({ PDFLib, images: [mk(plain, 'image/jpeg', 64, 48)], pageSize: 'a4', margin: 0, scrub: true });
   const sm = await (await load(scrubbed.bytes)).getMetadata();
   ok(!sm.info.Producer && !sm.info.CreationDate && !sm.info.Title, 'scrub leaves out all document metadata');

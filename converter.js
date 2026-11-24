@@ -1,4 +1,4 @@
-/*  Quanttum PDF - converter.js
+/*  PDF Qonverter - converter.js
  *  Pure logic for the Convert view. No DOM. Runs in the browser (window.QConvert) and in Node (tests).
  *
  *  Covers: zip read/write, .docx read/write, text/image/Word -> PDF layout, PDF text -> lines/paragraphs/text,
@@ -486,7 +486,7 @@
   function setMeta(out, o) {
     if (o.scrub) return;
     var d = new Date();
-    out.setProducer('Quanttum PDF'); out.setCreator('Quanttum PDF');
+    out.setProducer('PDF Qonverter'); out.setCreator('PDF Qonverter');
     out.setCreationDate(d); out.setModificationDate(d);
     if (o.title) out.setTitle(o.title);
   }

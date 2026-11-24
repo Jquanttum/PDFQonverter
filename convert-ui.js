@@ -1,4 +1,4 @@
-/* Quanttum PDF - convert-ui.js
+/* PDF Qonverter - convert-ui.js
  * The Convert view: ten conversions, all on this computer. Vanilla JS, uses converter.js and sheets.js for the logic.
  */
 (function () {
@@ -368,7 +368,7 @@
     } finally { pdf.destroy(); }
     var chars = 0, empty = 0;
     pages.forEach(function (p) { var c = p.lines.reduce(function (a, l) { return a + l.text.length; }, 0); chars += c; if (!c) empty++; });
-    if (!chars) throw new Error('This PDF has no selectable text. It is probably a scan or made of pictures. OCR (reading text from images) is not included in Quanttum PDF.');
+    if (!chars) throw new Error('This PDF has no selectable text. It is probably a scan or made of pictures. OCR (reading text from images) is not included in PDF Qonverter.');
     return { pages: pages, size: size, empty: empty };
   }
 
@@ -506,7 +506,7 @@
         pages.push({ num: rg.pages[i] + 1, items: r.items });
       }
     } finally { pdf.destroy(); }
-    if (!chars) throw new Error('This PDF has no selectable text. It is probably a scan or made of pictures. OCR (reading text from images) is not included in Quanttum PDF.');
+    if (!chars) throw new Error('This PDF has no selectable text. It is probably a scan or made of pictures. OCR (reading text from images) is not included in PDF Qonverter.');
     progress(0.85, 'Finding the columns'); await tick();
     var t = Q.tableFromPages(pages, { perPage: val('cvLayout') === 'pages', numbers: chkd('cvNums') }), hdr = chkd('cvHeader');
     var sheets = t.sheets.filter(function (s) { return s.rows.length; });
@@ -572,7 +572,7 @@
     btn.disabled = true;
     try {
       var html = window.QReport.buildOffice({
-        tool: { name: 'Quanttum PDF', version: '0.3' }, generated: new Date(), caseRef: rep.caseRef.trim(), examiner: rep.examiner.trim(),
+        tool: { name: 'PDF Qonverter', version: '0.3' }, generated: new Date(), caseRef: rep.caseRef.trim(), examiner: rep.examiner.trim(),
         file: { name: s.name, size: s.size, hash: s.hash, kindName: s.res.kindName, trailing: s.trailing }, findings: s.res.findings, sections: s.res.sections, log: U.getLog()
       });
       var base = s.name.replace(/\.[^.]+$/, '').replace(/[\\\/:*?"<>|]+/g, '_'), fname = base + ' - case report.html';

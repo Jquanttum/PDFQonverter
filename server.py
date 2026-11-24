@@ -1,4 +1,4 @@
-"""Quanttum PDF - tiny local web server.
+"""PDF Qonverter - tiny local web server.
 
 Why this exists: browsers refuse to run the PDF engine's background worker from a file:// address,
 so the app is served from http://127.0.0.1 instead. Nothing is exposed to the network, and no
@@ -50,7 +50,7 @@ def main():
     handler = functools.partial(Handler, directory=ROOT)
     server = http.server.ThreadingHTTPServer(("127.0.0.1", port), handler)
     url = "http://127.0.0.1:%d/index.html" % port
-    print("Quanttum PDF is running at", url)
+    print("PDF Qonverter is running at", url)
     print("Keep this window open while you work. Press Ctrl+C to stop.")
     threading.Timer(0.6, lambda: webbrowser.open(url)).start()
     try:

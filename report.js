@@ -1,4 +1,4 @@
-/* Quanttum PDF - report.js
+/* PDF Qonverter - report.js
  * Builds the case report: one self-contained, printable HTML page that records what was examined, what was found,
  * and what the tool did to the file. No DOM, no network, no external resources, so it runs in Node for tests.
  * Every piece of text that comes from the examined file is escaped before it is written into the page.
@@ -40,7 +40,7 @@
    * } -> html string
    */
   function build(d) {
-    var ev = d.evidence, fd = d.fmtDate || function (x) { return x; }, tool = d.tool || { name: 'Quanttum PDF', version: '' };
+    var ev = d.evidence, fd = d.fmtDate || function (x) { return x; }, tool = d.tool || { name: 'PDF Qonverter', version: '' };
     var gen = d.generated || new Date(), info = ev.info || {}, xmp = ev.xmp || {}, revs = ev.revisions || [], finds = ev.findings || [], log = d.log || [];
     var h = '';
 
@@ -132,7 +132,7 @@
    * d: { tool, generated, caseRef, examiner, file:{name,size,hash,kindName,trailing:{offset,bytes,hash}|null}, findings, sections, log }
    */
   function buildOffice(d) {
-    var f = d.file, gen = d.generated || new Date(), tool = d.tool || { name: 'Quanttum PDF', version: '' }, finds = d.findings || [], log = d.log || [];
+    var f = d.file, gen = d.generated || new Date(), tool = d.tool || { name: 'PDF Qonverter', version: '' }, finds = d.findings || [], log = d.log || [];
     var warns = finds.filter(function (x) { return x.level === 'warn'; }).length, h = '';
     h += '<header><h1>Case report</h1><p class="sub">Office file examination record</p>' +
       kv([['Case reference', d.caseRef ? esc(d.caseRef) : '<span class="blank"></span>'], ['Examiner', d.examiner ? esc(d.examiner) : '<span class="blank"></span>'],

@@ -172,7 +172,7 @@ async function pageTexts(pdf) {
   ok(B.rows[2][0].k === 's' && B.rows[2][0].v === '0123', 'leading-zero text stays text');
   ok(B.rows[2][4].v === 'éè你好', 'unicode survives');
   const z = C.zipRead(built.bytes);
-  ok(z.has('docProps/core.xml') && /Quanttum PDF/.test(new TextDecoder().decode(await z.get('docProps/core.xml'))), 'document properties written');
+  ok(z.has('docProps/core.xml') && /PDF Qonverter/.test(new TextDecoder().decode(await z.get('docProps/core.xml'))), 'document properties written');
   const bare = X.buildXlsx([{ name: 'S', rows: [['x']] }], { scrub: true });
   ok(!C.zipRead(bare.bytes).has('docProps/core.xml') && !C.zipRead(bare.bytes).has('docProps/app.xml'), 'scrub writes no document properties');
   const longT = X.buildXlsx([{ name: 'S', rows: [['x'.repeat(40000)]] }]);

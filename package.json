@@ -1,5 +1,5 @@
 {
-  "name": "quanttum-pdf",
+  "name": "pdf-qonverter",
   "version": "0.4.0",
   "description": "Offline PDF editor, converter and file examiner. Vanilla JS, no build step.",
   "private": true,

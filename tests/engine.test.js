@@ -119,7 +119,7 @@ const PNG1 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJ
   /* ---------- non-scrub metadata ---------- */
   const keep = await E.buildPdf({ PDFLib, sources: { a: sample }, pages: [{ uid: 1, src: 'a', idx: 0, extra: 0, geom }], annotations: {}, images: {}, scrub: false, rasterize: null });
   const km = await (await load(keep.bytes)).getMetadata();
-  ok(km.info.Producer === 'Quanttum PDF', 'producer set to Quanttum PDF');
+  ok(km.info.Producer === 'PDF Qonverter', 'producer set to PDF Qonverter');
   ok(String(km.info.CreationDate).startsWith("D:20260302"), 'creation date carried over');
   ok(E.scanRevisions(keep.bytes).revisions.length === 1, 'output is a single clean revision');
 

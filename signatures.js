@@ -1,4 +1,4 @@
-/* Quanttum PDF - signatures.js
+/* PDF Qonverter - signatures.js
  * Reads the digital signatures in a PDF and answers the questions a viewer's green tick hides:
  *   - which bytes does each signature actually cover, and is anything in the file outside that range?
  *   - do the covered bytes still hash to the value the signer signed (digest check)?
