@@ -1218,6 +1218,14 @@
     $('#saveClose').onclick = function () { $('#saveDlg').close(); };
     $('#diffClose').onclick = function () { $('#diffDlg').close(); };
     $$('.seg-btn').forEach(function (b) { b.onclick = function () { setMode(b.dataset.mode); }; });
+  /* ---------- phone layout: one panel at a time (CSS only shows #mNav on narrow screens) ---------- */
+  function setMobilePane(m) {
+    var app = $('#app'); app.dataset.m = m;
+    $$('#mNav button').forEach(function (b) { b.classList.toggle('on', b.dataset.m === m); });
+    if (m === 'edit' || m === 'inspect') { var t = $('.tab[data-tab="' + m + '"]'); if (t) t.click(); }
+  }
+  $$('#mNav button').forEach(function (b) { b.onclick = function () { setMobilePane(b.dataset.m); }; });
+
 
     $$('.tab').forEach(function (t) {
       t.onclick = function () {

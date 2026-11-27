@@ -26,6 +26,10 @@ Nothing is uploaded anywhere: every conversion runs inside your browser on your 
 
 Try `samples/invoice_edited.pdf`: it looks like a plain invoice for GHS 10,000.00, but the **Inspect** tab shows it was edited after it was created.
 
+## On a phone or online
+The app is plain static files, so it can be hosted (Vercel or GitHub Pages) and opened from a link in Chrome on Android. It still runs entirely in the browser; the host only serves the files and never sees your documents. Below 700 px wide it switches to a phone layout: one panel at a time with a bottom bar (Document, Pages, Edit, Inspect), a swipeable tool strip, and finger-sized buttons.
+Checked in headless Chrome with a Pixel 7 profile (no sideways scrolling, every screen reachable). **Not yet tested on a physical phone.** On a touch screen, dragging over a page scrolls it, so moving an annotation with a finger works best after choosing a drawing tool; the main use on a phone is reading, inspecting and converting.
+
 ## Edit mode
 
 **Mark up**

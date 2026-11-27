@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.1 - 2026-11-27
+- Phone layout (under 700 px): bottom navigation, swipeable tool and conversion strips, touch scrolling over pages, finger-sized targets. Fixes tool icons disappearing on screens narrower than 980 px. Adds `vercel.json` for hosting.
+
 ## 0.4.0 - 2026-11-24
 - Digital signature check (Inspect tab and case report): for each signature, the byte ranges it covers, whether anything was added after signing, whether the covered bytes still match the signed hash, RSA signature verification against the certificate inside the file, signer and certificate details, signing-time and padding checks. Does not check certificate trust, revocation or ECDSA/RSA-PSS signatures.
 

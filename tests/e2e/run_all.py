@@ -12,7 +12,7 @@ import os, pathlib, socket, subprocess, sys, time
 
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-TESTS = ['editor_e2e.py', 'convert_e2e.py', 'excel_e2e.py', 'report_e2e.py', 'office_e2e.py', 'signature_e2e.py']
+TESTS = ['editor_e2e.py', 'convert_e2e.py', 'excel_e2e.py', 'report_e2e.py', 'office_e2e.py', 'signature_e2e.py', 'mobile_e2e.py']
 
 
 def listening():
